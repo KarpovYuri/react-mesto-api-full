@@ -1,0 +1,25 @@
+.profile {
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: 120px 1fr 150px;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "avatar-edit info add-button"
+    "avatar-edit job add-button";
+  align-items: center;
+  column-gap: 30px;
+}
+
+@media (max-width: 1080px) {
+  .profile {
+    padding: 42px 19px 0;
+    grid-template-columns: 282px;
+    grid-template-rows: repeat(4, auto);
+    grid-template-areas:
+      "avatar-edit"
+      "info"
+      "job"
+      "add-button";
+    justify-content: center;
+  }
+}

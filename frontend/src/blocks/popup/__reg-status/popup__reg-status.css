@@ -1,0 +1,11 @@
+.popup__reg-status {
+  width: 120px;
+  height: 120px;
+  margin: 60px auto 0;
+}
+
+@media (max-width: 633px) {
+  .popup__reg-status {
+    margin-top: 50px;
+  }
+}

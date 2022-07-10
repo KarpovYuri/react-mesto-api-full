@@ -1,0 +1,25 @@
+.auth-form__field {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #ccc;
+  padding: 0 0 13px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.auth-form__field:first-of-type {
+  margin-top: 50px;
+}
+
+.auth-form__field::placeholder {
+  color: #ccc;
+}
+
+@media (max-width: 633px) {
+  .auth-form__field:first-of-type {
+    margin-top: 40px;
+  }
+}

@@ -1,0 +1,10 @@
+.popup__signature {
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: normal;
+  max-width: 240px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 10px 0 0;
+}
