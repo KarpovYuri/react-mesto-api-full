@@ -1,6 +1,6 @@
 {
-  "homepage": "http://Yurick78.github.io/react-mesto-auth",
-  "name": "react-mesto-auth",
+  "homepage": "http://mesto-project.nomoredomains.xyz",
+  "name": "react-mesto-api-full-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
