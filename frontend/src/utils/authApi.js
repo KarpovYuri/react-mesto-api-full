@@ -43,20 +43,20 @@ class AuthApi {
 
 
   // Проверка токена
-  checkToken(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(res => this._handlingResponse(res));
-  }
+  // checkToken(token) {
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${token}`
+  //     }
+  //   })
+  //     .then(res => this._handlingResponse(res));
+  // }
 
 }
 
 
-const authApi = new AuthApi('https://auth.nomoreparties.co');
+const authApi = new AuthApi('http://mesto-project.nomoredomains.xyz/api');
 
 export default authApi;

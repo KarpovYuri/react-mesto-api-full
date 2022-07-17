@@ -46,20 +46,20 @@ function App() {
 
 
   // Проверка токена и авторизация пользователя
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      authApi.checkToken(jwt)
-        .then(data => {
-          if (data) {
-            setIsProfileEmail(data.data.email)
-            setIsLoggedIn(true)
-            history.push('/');
-          }
-        })
-        .catch(error => { console.log(error); })
-    }
-  }, [history]);
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     authApi.checkToken(jwt)
+  //       .then(data => {
+  //         if (data) {
+  //           setIsProfileEmail(data.data.email)
+  //           setIsLoggedIn(true)
+  //           history.push('/');
+  //         }
+  //       })
+  //       .catch(error => { console.log(error); })
+  //   }
+  // }, [history]);
 
 
   // Получение данных текущего пользователя
