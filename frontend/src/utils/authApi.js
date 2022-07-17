@@ -57,6 +57,6 @@ class AuthApi {
 }
 
 
-const authApi = new AuthApi('http://mesto-project.nomoredomains.xyz/api');
+const authApi = new AuthApi('http://api.mesto-project.nomoredomains.xyz');
 
 export default authApi;
