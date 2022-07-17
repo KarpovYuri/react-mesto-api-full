@@ -45,39 +45,26 @@ function App() {
   const history = useHistory();
 
 
-  // Проверка токена и авторизация пользователя
-  useEffect(() => {
-    const _id = localStorage.getItem('_id');
-    if (_id) {
-      authApi.checkToken()
-        .then(data => {
-          if (data) {
-            setIsProfileEmail(data.data.email)
-            setIsLoggedIn(true)
-            history.push('/');
-          }
-        })
-        .catch(error => { console.log(error); })
-    }
-  }, [history]);
-
-
   // Получение данных текущего пользователя
   useEffect(() => {
-    api.getUserInfo()
-      .then(result => setIsCurrentUser(result))
-      .catch(error => console.log(error));
-  }, []);
+    if (isLoggedIn) {
+      api.getUserInfo()
+        .then(result => setIsCurrentUser(result))
+        .catch(error => console.log(error));
+    }
+  }, [isLoggedIn]);
 
 
   // Получение данных начальных карточек
   useEffect(() => {
-    api.getInitialCards()
-      .then(initialCards => {
-        setIsCards(initialCards);
-      })
-      .catch(error => console.log(error));
-  }, []);
+    if (isLoggedIn) {
+      api.getInitialCards()
+        .then(initialCards => {
+          setIsCards(initialCards);
+        })
+        .catch(error => console.log(error));
+    }
+  }, [isLoggedIn]);
 
 
   function handleCardLike(card) {
@@ -210,15 +197,31 @@ function App() {
       .finally(() => setIsInfoTooltipPopupOpen(true));
   }
 
+  // Проверка токена и авторизация пользователя
+  // useEffect(() => {
+  //   const _id = localStorage.getItem('_id');
+  //   if (_id) {
+  //     authApi.checkToken()
+  //       .then(data => {
+  //         if (data) {
+  //           setIsProfileEmail(data.data.email)
+  //           setIsLoggedIn(true)
+  //           history.push('/');
+  //         }
+  //       })
+  //       .catch(error => { console.log(error); })
+  //   }
+  // }, [history]);
+
 
   // Вход в аккаунт
   function handleLoginUser(email, password) {
     authApi.loginUser(email, password)
       .then(data => {
         if (data._id) {
+          localStorage.setItem('_id', data._id);
           setIsProfileEmail(email)
           setIsLoggedIn(true);
-          localStorage.setItem('_id', data._id);
           history.push('/');
         }
       })

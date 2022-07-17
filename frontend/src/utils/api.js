@@ -2,7 +2,6 @@
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
-    this._token = options.token;
   }
 
 
@@ -20,9 +19,7 @@ class Api {
   // Запрос данных профиля
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
-      headers: {
-        authorization: this._token
-      }
+      credentials: 'include',
     })
       .then(res => this._handlingResponse(res));
   }
@@ -31,9 +28,7 @@ class Api {
   // Запрос начальных карточек
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
-      headers: {
-        authorization: this._token
-      }
+      credentials: 'include',
     })
       .then(res => this._handlingResponse(res));
   }
@@ -43,8 +38,8 @@ class Api {
   addUserInfo(data) {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -60,8 +55,8 @@ class Api {
   addCard(data) {
     return fetch(`${this._baseUrl}cards`, {
       method: "POST",
+      credentials: 'include',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -77,9 +72,7 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}cards/${cardId}`, {
       method: "DELETE",
-      headers: {
-        authorization: this._token
-      }
+      credentials: 'include',
     })
       .then(res => this._handlingResponse(res));
   }
@@ -89,9 +82,7 @@ class Api {
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: isLiked ? "PUT" : "DELETE",
-      headers: {
-        authorization: this._token,
-      },
+      credentials: 'include',
     })
       .then((res) => this._handlingResponse(res));
   }
@@ -101,8 +92,8 @@ class Api {
   updateAvatar(data) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: "PATCH",
+      credentials: 'include',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -116,7 +107,6 @@ class Api {
 
 const api = new Api({
   baseUrl: 'https://api.mesto-project.nomoredomains.xyz/',
-  token: 'e7a7c3fb-6194-4371-9a2c-b0a475e73e1c'
 });
 
 export default api;
