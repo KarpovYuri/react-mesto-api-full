@@ -33,6 +33,7 @@ class AuthApi {
   loginUser(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -43,20 +44,20 @@ class AuthApi {
 
 
   // Проверка токена
-  // checkToken(token) {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${token}`
-  //     }
-  //   })
-  //     .then(res => this._handlingResponse(res));
-  // }
+  checkToken() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(res => this._handlingResponse(res));
+  }
 
 }
 
 
-const authApi = new AuthApi('http://api.mesto-project.nomoredomains.xyz');
+const authApi = new AuthApi('https://api.mesto-project.nomoredomains.xyz');
 
 export default authApi;

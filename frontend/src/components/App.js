@@ -47,9 +47,9 @@ function App() {
 
   // Проверка токена и авторизация пользователя
   // useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     authApi.checkToken(jwt)
+  //   const email = localStorage.getItem('email');
+  //   if (email) {
+  //     authApi.checkToken()
   //       .then(data => {
   //         if (data) {
   //           setIsProfileEmail(data.data.email)
@@ -215,10 +215,10 @@ function App() {
   function handleLoginUser(email, password) {
     authApi.loginUser(email, password)
       .then(data => {
-        if (data) {
+        if (data.email) {
           setIsProfileEmail(email)
           setIsLoggedIn(true);
-          //localStorage.setItem('jwt', data.token);
+          localStorage.setItem('email', data.email);
           history.push('/');
         }
       })
@@ -232,7 +232,7 @@ function App() {
 
   // Выход из аккаунта
   const handleLogout = () => {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('email');
     setIsProfileEmail('')
     setIsLoggedIn(false);
     history.push('/sign-in');
