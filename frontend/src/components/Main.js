@@ -34,7 +34,7 @@ function Main(
           </button>
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">{currentUser.name}</h1>
+          <h1 className="profile__name">{currentUser.name || ''}</h1>
           <button
             type="button"
             aria-label="Кнопка редактирования профиля"

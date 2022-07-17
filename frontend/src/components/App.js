@@ -47,33 +47,30 @@ function App() {
 
   // Получение данных текущего пользователя
   useEffect(() => {
-    if (isLoggedIn) {
-      api.getUserInfo()
-        .then(result => setIsCurrentUser(result))
-        .catch(error => console.log(error));
-    }
-  }, [isLoggedIn]);
+    api.getUserInfo()
+      .then(result => setIsCurrentUser(result))
+      .catch(error => console.log(error));
+
+  }, []);
 
 
   // Получение данных начальных карточек
   useEffect(() => {
-    if (isLoggedIn) {
-      api.getInitialCards()
-        .then(initialCards => {
-          setIsCards(initialCards);
-        })
-        .catch(error => console.log(error));
-    }
-  }, [isLoggedIn]);
+    api.getInitialCards()
+      .then(initialCards => {
+        setIsCards(initialCards);
+      })
+      .catch(error => console.log(error));
+  }, []);
 
 
   function handleCardLike(card) {
 
     // Проверяем есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === isCurrentUser._id);
+    const isLiked = card.likes.some(like => like === isCurrentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, isLiked)
       .then((likeCard) => {
         setIsCards(cardsArray => cardsArray.map(item => item._id === card._id ? likeCard : item));
       })
@@ -198,20 +195,20 @@ function App() {
   }
 
   // Проверка токена и авторизация пользователя
-  // useEffect(() => {
-  //   const _id = localStorage.getItem('_id');
-  //   if (_id) {
-  //     authApi.checkToken()
-  //       .then(data => {
-  //         if (data) {
-  //           setIsProfileEmail(data.data.email)
-  //           setIsLoggedIn(true)
-  //           history.push('/');
-  //         }
-  //       })
-  //       .catch(error => { console.log(error); })
-  //   }
-  // }, [history]);
+  useEffect(() => {
+    const _id = localStorage.getItem('_id');
+    if (_id) {
+      authApi.checkToken()
+        .then(data => {
+          if (data) {
+            setIsProfileEmail(data.email)
+            setIsLoggedIn(true)
+            history.push('/');
+          }
+        })
+        .catch(error => { console.log(error); })
+    }
+  }, [history]);
 
 
   // Вход в аккаунт

@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://mesto-project.nomoredomains.xyz'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://mesto-project.nomoredomains.xyz'],
   credentials: true,
 }));
 

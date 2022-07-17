@@ -80,8 +80,8 @@ class Api {
 
   // Постановка и снятие лайка карточке
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
-      method: isLiked ? "PUT" : "DELETE",
+    return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
+      method: isLiked ? "DELETE" : "PUT",
       credentials: 'include',
     })
       .then((res) => this._handlingResponse(res));
