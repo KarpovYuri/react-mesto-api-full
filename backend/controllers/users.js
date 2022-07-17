@@ -96,8 +96,8 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.cookie('jwt', token, {
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: true,
+        // httpOnly: true,
+        // sameSite: true,
       });
       res.status(200).send({ _id: user._id, message: 'Авторизация прошла успешно' });
     })
