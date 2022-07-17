@@ -12,20 +12,27 @@ const NotFoundError = require('./errors/not-found-err');
 const urlRegExp = require('./utils/url-regexp');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+mongoose.connect('mongodb://localhost:27017/mestodb');
+
 const { PORT = 3000 } = process.env;
 
 const app = express();
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({
   origin: ['http://localhost:3000', 'https://mesto-project.nomoredomains.xyz'],
   credentials: true,
 }));
 
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-mongoose.connect('mongodb://localhost:27017/mestodb');
+// отдестроить после ревью
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post(
   '/signin',
