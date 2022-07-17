@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-// const cors = require('cors');
+const cors = require('cors');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
@@ -16,9 +16,9 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-// app.use(cors({
-//   origin: '*',
-// }));
+app.use(cors({
+  origin: '*',
+}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
