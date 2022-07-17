@@ -46,20 +46,20 @@ function App() {
 
 
   // Проверка токена и авторизация пользователя
-  // useEffect(() => {
-  //   const email = localStorage.getItem('email');
-  //   if (email) {
-  //     authApi.checkToken()
-  //       .then(data => {
-  //         if (data) {
-  //           setIsProfileEmail(data.data.email)
-  //           setIsLoggedIn(true)
-  //           history.push('/');
-  //         }
-  //       })
-  //       .catch(error => { console.log(error); })
-  //   }
-  // }, [history]);
+  useEffect(() => {
+    const _id = localStorage.getItem('_id');
+    if (_id) {
+      authApi.checkToken()
+        .then(data => {
+          if (data) {
+            setIsProfileEmail(data.data.email)
+            setIsLoggedIn(true)
+            history.push('/');
+          }
+        })
+        .catch(error => { console.log(error); })
+    }
+  }, [history]);
 
 
   // Получение данных текущего пользователя
@@ -215,10 +215,10 @@ function App() {
   function handleLoginUser(email, password) {
     authApi.loginUser(email, password)
       .then(data => {
-        if (data.email) {
+        if (data._id) {
           setIsProfileEmail(email)
           setIsLoggedIn(true);
-          localStorage.setItem('email', data.email);
+          localStorage.setItem('_id', data._id);
           history.push('/');
         }
       })
@@ -232,7 +232,7 @@ function App() {
 
   // Выход из аккаунта
   const handleLogout = () => {
-    localStorage.removeItem('email');
+    localStorage.removeItem('_id');
     setIsProfileEmail('')
     setIsLoggedIn(false);
     history.push('/sign-in');

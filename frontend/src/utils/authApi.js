@@ -52,7 +52,10 @@ class AuthApi {
         'Content-Type': 'application/json',
       }
     })
-      .then(res => this._handlingResponse(res));
+      .then(res => {
+        console.log(res)
+        this._handlingResponse(res)
+      });
   }
 
 }
