@@ -58,7 +58,7 @@ function App() {
   useEffect(() => {
     api.getInitialCards()
       .then(initialCards => {
-        setIsCards(initialCards);
+        setIsCards(initialCards.reverse());
       })
       .catch(error => console.log(error));
   }, []);
