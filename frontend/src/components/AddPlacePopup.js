@@ -15,7 +15,7 @@ function AddPlacePopup({ isOpen, onClose, onStop, onAddPlace, isRenderLoading })
     inputNameValid,
     inputNameError,
     inputNameTouched
-  } = useValidation(isPlaceName, { isEmpty: true, minLength: 5, maxLength: 30 }, 'Name');
+  } = useValidation(isPlaceName, { isEmpty: true, minLength: 2, maxLength: 30 }, 'Name');
   const {
     inputLinkValid,
     inputLinkError,

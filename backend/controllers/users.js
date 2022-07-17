@@ -30,7 +30,7 @@ const createUser = (req, res, next) => {
         .then((user) => {
           const returnUser = user.toObject();
           delete returnUser.password;
-          res.send({ data: returnUser });
+          res.send(returnUser);
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
@@ -54,7 +54,7 @@ const getUser = (req, res, next) => {
 const getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные при поиске пользователя'));
@@ -67,7 +67,7 @@ const updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .orFail(() => { throw new NotFoundError('Пользователь с указанным _id не найден'); })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
@@ -80,7 +80,7 @@ const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail(() => { throw new NotFoundError('Пользователь с указанным _id не найден'); })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении аватара'));

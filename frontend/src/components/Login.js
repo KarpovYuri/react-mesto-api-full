@@ -16,7 +16,7 @@ export default function Login({ onLogin }) {
     inputPasswordValid,
     inputPasswordError,
     inputPasswordTouched
-  } = useValidation(isPassword, { isEmpty: true, minLength: 5 }, 'Password');
+  } = useValidation(isPassword, { isEmpty: true, minLength: 8 }, 'Password');
 
 
   // Устанавливаем Email пользователя
