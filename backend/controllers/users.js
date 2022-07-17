@@ -98,7 +98,7 @@ const login = (req, res, next) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      res.status(200).send({ message: 'Авторизация прошла успешно' });
+      res.status(200).send({ data: user, message: 'Авторизация прошла успешно' });
     })
     .catch(next);
 };

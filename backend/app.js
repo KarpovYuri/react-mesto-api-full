@@ -16,7 +16,10 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://mesto-project.nomoredomains.xyz'],
+  credentials: true,
+}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());

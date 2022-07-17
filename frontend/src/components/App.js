@@ -215,10 +215,10 @@ function App() {
   function handleLoginUser(email, password) {
     authApi.loginUser(email, password)
       .then(data => {
-        if (data.token) {
+        if (data) {
           setIsProfileEmail(email)
           setIsLoggedIn(true);
-          localStorage.setItem('jwt', data.token);
+          //localStorage.setItem('jwt', data.token);
           history.push('/');
         }
       })
