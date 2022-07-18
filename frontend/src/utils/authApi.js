@@ -58,6 +58,6 @@ class AuthApi {
 }
 
 
-const authApi = new AuthApi('https://api.mesto-project.nomoredomains.xyz');
+const authApi = new AuthApi('http://localhost:3000');
 
 export default authApi;

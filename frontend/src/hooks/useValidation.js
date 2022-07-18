@@ -7,7 +7,7 @@ const useValidation = (value = '', validations, variableName) => {
   const [isInputTouched, setIsInputTouched] = useState(false);
   const minLength = validations.minLength;
   // eslint-disable-next-line no-useless-escape
-  const regExpUrl = /(^https?:\/\/)?[a-z0-9~_\-\.]+\.[a-z]{2,9}(\/|:|\?[!-~]*)?$/i;
+  const regExpUrl = /(^https?:\/\/)?[a-z0-9~_\-\.]+\.[a-z]{2,9}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/i;
   const regExpEmail = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
 
   React.useEffect(() => {
