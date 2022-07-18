@@ -47,21 +47,24 @@ function App() {
 
   // Получение данных текущего пользователя
   useEffect(() => {
-    api.getUserInfo()
-      .then(result => setIsCurrentUser(result))
-      .catch(error => console.log(error));
-
-  }, []);
+    if (isLoggedIn) {
+      api.getUserInfo()
+        .then(result => setIsCurrentUser(result))
+        .catch(error => console.log(error));
+    }
+  }, [isLoggedIn]);
 
 
   // Получение данных начальных карточек
   useEffect(() => {
-    api.getInitialCards()
-      .then(initialCards => {
-        setIsCards(initialCards.reverse());
-      })
-      .catch(error => console.log(error));
-  }, []);
+    if (isLoggedIn) {
+      api.getInitialCards()
+        .then(initialCards => {
+          setIsCards(initialCards.reverse());
+        })
+        .catch(error => console.log(error));
+    }
+  }, [isLoggedIn]);
 
 
   function handleCardLike(card) {
