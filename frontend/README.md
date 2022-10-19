@@ -49,4 +49,4 @@
 
 **Mesto Russia**
 
-* [ссылка на GitHub Pages](https://yurick78.github.io/react-mesto-auth/index.html)
+* [ссылка на GitHub Pages](https://KarpovYuri.github.io/react-mesto-auth/index.html)
