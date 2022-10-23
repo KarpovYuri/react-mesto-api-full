@@ -1,5 +1,5 @@
 {
-  "homepage": "http://mesto-project.nomoredomains.xyz",
+  "homepage": "./",
   "name": "react-mesto-api-full-frontend",
   "version": "0.1.0",
   "private": true,
