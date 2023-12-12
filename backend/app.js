@@ -8,13 +8,13 @@ const { celebrate, Joi, errors } = require('celebrate');
 const cors = require('cors');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 const urlRegExp = require('./utils/url-regexp');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-mongoose.connect('mongodb://localhost:27017/mestodb');
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 const { PORT = 3000 } = process.env;
 
@@ -24,32 +24,22 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://mesto-project.nomoredomains.xyz',
-    'http://mesto-project.nomoredomains.xyz',
-  ],
-  credentials: true,
-}));
-
-// отдестроить после ревью
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'https://mesto-react.karaudio.ru'],
+    credentials: true
+  })
+);
 
 app.post(
   '/signin',
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
-      password: Joi.string().required().min(8),
-    }),
+      password: Joi.string().required().min(8)
+    })
   }),
-  login,
+  login
 );
 app.post(
   '/signup',
@@ -59,11 +49,12 @@ app.post(
       password: Joi.string().required().min(8),
       name: Joi.string().min(2).max(30),
       about: Joi.string().min(2).max(30),
-      avatar: Joi.string().regex(urlRegExp),
-    }),
+      avatar: Joi.string().regex(urlRegExp)
+    })
   }),
-  createUser,
+  createUser
 );
+app.post('/logout', logout);
 
 app.use(auth);
 
@@ -84,4 +75,4 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => { });
+app.listen(PORT, () => {});

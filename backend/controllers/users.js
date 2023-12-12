@@ -15,37 +15,36 @@ const getUsers = (req, res, next) => {
 
 // Создание пользоателя
 const createUser = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
-  bcrypt.hash(password, 10)
-    .then((hash) => {
-      User.create({
-        name,
-        about,
-        avatar,
-        email,
-        password: hash,
+  const { name, about, avatar, email, password } = req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+    User.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash
+    })
+      .then((user) => {
+        const returnUser = user.toObject();
+        delete returnUser.password;
+        res.send(returnUser);
       })
-        .then((user) => {
-          const returnUser = user.toObject();
-          delete returnUser.password;
-          res.send(returnUser);
-        })
-        .catch((err) => {
-          if (err.name === 'ValidationError') {
-            next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
-          } else if (err.code === 11000) {
-            next(new ConflictError('Пользователем с такими e-mail уже существует'));
-          } else next(err);
-        });
-    });
+      .catch((err) => {
+        if (err.name === 'ValidationError') {
+          next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        } else if (err.code === 11000) {
+          next(new ConflictError('Пользователем с такими e-mail уже существует'));
+        } else next(err);
+      });
+  });
 };
 
 // Получить данные о пользователе
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
+    .orFail(() => {
+      throw new NotFoundError('Пользователь не найден');
+    })
     .then((user) => res.send(user))
     .catch(next);
 };
@@ -53,7 +52,9 @@ const getUser = (req, res, next) => {
 // Получить данные пользователя по id
 const getUserById = (req, res, next) => {
   User.findById(req.params.userId)
-    .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
+    .orFail(() => {
+      throw new NotFoundError('Пользователь не найден');
+    })
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -66,7 +67,9 @@ const getUserById = (req, res, next) => {
 const updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
-    .orFail(() => { throw new NotFoundError('Пользователь с указанным _id не найден'); })
+    .orFail(() => {
+      throw new NotFoundError('Пользователь с указанным _id не найден');
+    })
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -79,7 +82,9 @@ const updateUser = (req, res, next) => {
 const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-    .orFail(() => { throw new NotFoundError('Пользователь с указанным _id не найден'); })
+    .orFail(() => {
+      throw new NotFoundError('Пользователь с указанным _id не найден');
+    })
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -93,13 +98,29 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' }
+      );
       res.cookie('jwt', token, {
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        // httpOnly: true,
-        // sameSite: true,
+        httpOnly: true,
+        sameSite: true
       });
-      res.status(200).send({ _id: user._id, message: 'Авторизация прошла успешно' });
+      res.status(200).send({ _id: user._id, message: 'Авторизация прошла успешно', token });
+    })
+    .catch(next);
+};
+
+// Выход пользователя
+const logout = (req, res, next) => {
+  const { email } = req.body;
+  User.findOne({ email })
+    .then(() => {
+      res
+        .clearCookie('jwt', { httpOnly: true, sameSite: true })
+        .send({ message: 'Вы вышли из аккаунта' });
     })
     .catch(next);
 };
@@ -113,4 +134,5 @@ module.exports = {
   updateUser,
   updateAvatar,
   login,
+  logout
 };
