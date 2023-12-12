@@ -4,7 +4,6 @@ class Api {
     this._baseUrl = options.baseUrl;
   }
 
-
   // Обработка ответа сервера
   _handlingResponse(result) {
     if (result.ok) {
@@ -15,98 +14,83 @@ class Api {
     }
   }
 
-
   // Запрос данных профиля
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
-      credentials: 'include',
-    })
-      .then(res => this._handlingResponse(res));
+      credentials: "include",
+    }).then((res) => this._handlingResponse(res));
   }
-
 
   // Запрос начальных карточек
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
-      credentials: 'include',
-    })
-      .then(res => this._handlingResponse(res));
+      credentials: "include",
+    }).then((res) => this._handlingResponse(res));
   }
-
 
   // Отправка данных профиля
   addUserInfo(data) {
     return fetch(`${this._baseUrl}users/me`, {
-      method: 'PATCH',
-      credentials: 'include',
+      method: "PATCH",
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: data.name,
-        about: data.about
-      })
-    })
-      .then(res => this._handlingResponse(res));
+        about: data.about,
+      }),
+    }).then((res) => this._handlingResponse(res));
   }
-
 
   // Отправка добавленной карточки
   addCard(data) {
     return fetch(`${this._baseUrl}cards`, {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         link: data.link,
-        name: data.name
-      })
-    })
-      .then(res => this._handlingResponse(res));
+        name: data.name,
+      }),
+    }).then((res) => this._handlingResponse(res));
   }
-
 
   // Удаление карточки
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}cards/${cardId}`, {
       method: "DELETE",
-      credentials: 'include',
-    })
-      .then(res => this._handlingResponse(res));
+      credentials: "include",
+    }).then((res) => this._handlingResponse(res));
   }
-
 
   // Постановка и снятие лайка карточке
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
-      credentials: 'include',
-    })
-      .then((res) => this._handlingResponse(res));
+      credentials: "include",
+    }).then((res) => this._handlingResponse(res));
   }
-
 
   // Обновление аватара пользователя
   updateAvatar(data) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: "PATCH",
-      credentials: 'include',
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        avatar: data.avatar
-      })
-    })
-      .then(res => this._handlingResponse(res));
+        avatar: data.avatar,
+      }),
+    }).then((res) => this._handlingResponse(res));
   }
-
 }
 
 const api = new Api({
-  baseUrl: 'http://localhost:3000/',
+  baseUrl: "http://localhost:3000/",
 });
 
 export default api;

@@ -31,8 +31,7 @@ const deleteCardById = (req, res, next) => {
       } else if (req.user._id !== card.owner._id.toString()) {
         next(new ForbiddenError('У вас нет прав на удаление данной карточки'));
       } else {
-        card.remove()
-          .then(() => res.send(card));
+        card.deleteOne().then(() => res.send(card));
       }
     })
     .catch((err) => {
@@ -47,7 +46,9 @@ const likeCard = (req, res, next) => {
   const { cardId } = req.params;
   const { _id } = req.user;
   Card.findByIdAndUpdate(cardId, { $addToSet: { likes: _id } }, { new: true })
-    .orFail(() => { throw new NotFoundError('Передан несуществующий _id карточки'); })
+    .orFail(() => {
+      throw new NotFoundError('Передан несуществующий _id карточки');
+    })
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -61,7 +62,9 @@ const dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
   const { _id } = req.user;
   Card.findByIdAndUpdate(cardId, { $pull: { likes: _id } }, { new: true })
-    .orFail(() => { throw new NotFoundError('Передан несуществующий _id карточки'); })
+    .orFail(() => {
+      throw new NotFoundError('Передан несуществующий _id карточки');
+    })
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -76,5 +79,5 @@ module.exports = {
   createCard,
   deleteCardById,
   likeCard,
-  dislikeCard,
+  dislikeCard
 };
