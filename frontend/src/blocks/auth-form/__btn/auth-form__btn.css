@@ -17,6 +17,18 @@
   opacity: 0.85;
 }
 
+.auth-form__btn_demo {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 14px;
+  height: auto;
+  background-color: transparent;
+}
+
+.auth-form__btn_demo:hover {
+  opacity: 0.6;
+}
+
 @media (max-width: 633px) {
   .auth-form__btn {
     height: 46px;

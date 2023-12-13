@@ -230,10 +230,19 @@ function App() {
 
   // Выход из аккаунта
   const handleLogout = () => {
-    localStorage.removeItem("_id");
-    setIsProfileEmail("");
-    setIsLoggedIn(false);
-    history.push("/sign-in");
+    authApi
+      .logoutUser(isProfileEmail)
+      .then(() => {
+        localStorage.removeItem("_id");
+        setIsProfileEmail("");
+        setIsLoggedIn(false);
+        history.push("/sign-in");
+      })
+      .catch((error) => {
+        setIsInfoTooltipPopupOpen(true);
+        setIsInfoTooltipSuccess(false);
+        console.log(error);
+      });
   };
 
   return (
