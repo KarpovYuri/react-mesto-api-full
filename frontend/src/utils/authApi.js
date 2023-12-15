@@ -54,5 +54,6 @@ class AuthApi {
 }
 
 const authApi = new AuthApi("http://localhost:3000");
+// const authApi = new AuthApi("https://api.mesto-react.karaudio.ru");
 
 export default authApi;
