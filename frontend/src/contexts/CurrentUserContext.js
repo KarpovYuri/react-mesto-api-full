@@ -1,5 +1,5 @@
 // Cоздание объекта контекста
-import React from 'react';
+import React from "react";
 
 const CurrentUserContext = React.createContext();
 

@@ -81,8 +81,12 @@ export default function Login({ onLogin }) {
       >
         {inputPasswordError}
       </span>
+
       <button
-        className="auth-form__btn"
+        className={`auth-form__btn ${
+          (!inputEmailValid || !inputPasswordValid) && "auth-form__btn_inactive"
+        }`}
+        disabled={!inputEmailValid || !inputPasswordValid}
         type="submit"
         aria-label="Кнопка входа"
       >

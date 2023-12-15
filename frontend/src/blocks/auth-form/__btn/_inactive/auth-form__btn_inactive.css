@@ -1,0 +1,11 @@
+.auth-form__btn_inactive {
+  background: transparent;
+  border: 1px solid #fff;
+  color: white;
+  opacity: 0.2;
+  cursor: auto;
+}
+
+.auth-form__btn_inactive:hover {
+  opacity: 0.2;
+}
